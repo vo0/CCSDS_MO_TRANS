@@ -60,6 +60,7 @@ public class RMITransport extends GENTransport
    * System property to set the host name used locally.
    */
   public static final String RMI_HOSTNAME_PROPERTY = "org.ccsds.moims.mo.mal.transport.rmi.host";
+  public static final String RMI_PORT_PROPERTY = "org.ccsds.moims.mo.mal.transport.rmi.port";
   private static final char RMI_PORT_DELIM = ':';
   private final String serverHost;
   private Registry registry;
@@ -95,6 +96,12 @@ public class RMITransport extends GENTransport
   {
     // Port numbers above 1023 are up for grabs on any machine....
     int iRmiPort = 1024;
+    if ((this.qosProperties != null) && (this.qosProperties.containsKey(RMI_PORT_PROPERTY)))
+    {
+    	iRmiPort = Integer.parseInt((String) this.qosProperties.get(RMI_PORT_PROPERTY));
+    }
+       
+    
     while (true)
     {
       try
